@@ -71,7 +71,7 @@ main:
     sts MICROS, r16
     sts MICROS+1, r16
     
-    ldi r16, 0b00000011 ; 
+    ldi r16, (1<<CS01)+(1<<CS00); 
     ldi r17, (1 << TOIE0) ; enable interrupt
     sts TCCR0, r16
     sts TIMSK, r17
@@ -100,7 +100,7 @@ main:
 loop:
     lds TMPL, PINC
     eor TMPL, STATE  ;
-    andi TMPL, 1   ; if ((state ^ PINB) & 1 != 0)
+    andi TMPL, 1   ; if ((state ^ PINC) & 1 != 0)
     brne loop_else ; if prev_state != cur_state
         cli
         lds PREV_MILLIS_L, MILLIS

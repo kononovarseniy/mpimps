@@ -46,12 +46,14 @@ timer_overflow:
         sts OCR0, r16
 
         cpi r16, 255
-        brne .+2
+        brne l1
             ldi DIR, -1
+        l1:
 
         cpi r16, 0
-        brne .+2
+        brne l2
             ldi DIR, 1
+        l2:
     timer_overflow_end:
     reti
 
