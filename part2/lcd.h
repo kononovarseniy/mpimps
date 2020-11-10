@@ -3,6 +3,16 @@
 
 #include <avr/io.h>
 
+#define DATA_PORT PORTA
+#define DATA_DDR DDRA
+#define DATA_IN PINA
+
+#define CTL_PORT PORTB
+#define CTL_DDR DDRB
+#define RS_PIN PB0
+#define RW_PIN PB1
+#define E_PIN PB2
+
 void hd_write(uint8_t data, uint8_t is_data);
 uint8_t hd_read(uint8_t is_data);
 void hd_cmd(uint8_t cmd);

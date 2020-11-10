@@ -1,16 +1,6 @@
 #include "lcd.h"
 #include <avr/io.h>
 
-#define DATA_PORT PORTA
-#define DATA_DDR DDRA
-#define DATA_IN PINA
-
-#define CTL_PORT PORTB
-#define CTL_DDR DDRB
-#define RS_PIN PB0
-#define RW_PIN PB1
-#define E_PIN PB2
-
 void hd_wait() {
     do {
         DATA_DDR = 0x00;

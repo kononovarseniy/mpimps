@@ -27,8 +27,8 @@ upload-%: PROC = atmega16
 upload-%: PROG = pinboard
 upload-%: upload-program-task% ;
 
-bin/lcd.elf: task5.c lcd.c lcd.h
-	$(GCC) -I/usr/avr/include task5.c lcd.c -o bin/lcd.elf
+bin/lcd.elf: task5.c lcd.c lcd.h led.c led.h
+	$(GCC) -I/usr/avr/include task5.c lcd.c led.c -o bin/lcd.elf
 
 bin/lcd.hex: bin/lcd.elf
 	avr-objcopy -O ihex bin/lcd.elf bin/lcd.hex
