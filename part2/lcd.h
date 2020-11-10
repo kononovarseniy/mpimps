@@ -3,9 +3,9 @@
 
 #include <avr/io.h>
 
-#define DATA_PORT PORTA
-#define DATA_DDR DDRA
-#define DATA_IN PINA
+#define DATA_PORT PORTD
+#define DATA_DDR DDRD
+#define DATA_IN PIND
 
 #define CTL_PORT PORTB
 #define CTL_DDR DDRB
