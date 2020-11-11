@@ -1,5 +1,6 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
+#include <avr/wdt.h>
 
 #include "lcd.h"
 #include "led.h"
@@ -23,6 +24,8 @@ uint8_t dot_pos[] = { 30, 1 };
 #define BTN_SAVE BTN(0, 2)
 #define BTN_LOAD BTN(2, 2)
 
+#define BTN_FREEZE BTN(0, 0)
+
 uint16_t kbs;
 
 #define MEMORY_DEVICE 0b111
@@ -38,8 +41,12 @@ void load_callback(uint8_t res) {
 }
 
 ISR(TIMER0_OVF_vect) {
+
     uint8_t prev_kbs = kbs;
     kbs = kbd_scan();
+    
+    if (!(kbs & BTN_FREEZE))
+        wdt_reset();
 
     if ((kbs & BTN_L) && dot_pos[0] > 0) dot_pos[0]--;
     if ((kbs & BTN_R) && dot_pos[0] < 31) dot_pos[0]++;
@@ -93,6 +100,8 @@ ISR(ADC_vect) {
 }
 
 void main() {
+    wdt_disable();
+
     led_clear(display);
     for (int i = 0; i < 32; i++)
         table[i] = i % 8;
@@ -106,6 +115,7 @@ void main() {
     kbd_init();
     twi_init();
     mem_init();
+    wdt_enable(WDTO_2S);
 
     sei();
 
